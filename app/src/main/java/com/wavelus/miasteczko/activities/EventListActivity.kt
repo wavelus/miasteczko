@@ -10,19 +10,17 @@ import kotlinx.android.synthetic.main.activity_event_list.*
 
 
 class EventListActivity : AppCompatActivity() {
-//    var mCurrentUser = FirebaseAuth.getInstance().currentUser!!.uid
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         var sectionAdapter: SectionPagerAdapter? = null
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_list)
 
-        supportActionBar!!.title = "Dashboard"
+//        supportActionBar!!.title = "Dashboard"
 
         sectionAdapter = SectionPagerAdapter(supportFragmentManager)
-        dashViewPagerId.adapter = sectionAdapter
-        mainTabs.setupWithViewPager(dashViewPagerId)
+        eventViewPagerId.adapter = sectionAdapter
+        mainTabs.setupWithViewPager(eventViewPagerId)
         mainTabs.setTabTextColors(Color.WHITE, Color.GREEN)
 
     }

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.activities.login.LoginActivity
+import com.wavelus.miasteczko.activities.signup.SignUpActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
 
@@ -39,7 +40,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         createActButton.setOnClickListener {
-            startActivity(Intent(this, CreateAccountActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 
