@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        tools:context=".activities.signup.CreateEmailAccountActivity">
+
+    <android.support.v7.widget.CardView
+            android:layout_width="300dp"
+            android:id="@+id/cv"
+            android:background="@color/colorAccent"
+            app:cardCornerRadius="13dp"
+            android:elevation="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_height="300dp" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@color/colorAccent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/chat_icon"
+                    android:layout_height="80dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#fff"
+                    android:text="Rejestracja"
+                    android:textSize="18sp"
+            />
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginTop="13dp"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:id="@+id/accountDisplayNameEt"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:inputType="textPersonName"
+                        android:hint="Twoje miasteczkowe pseudo"
+                        android:paddingBottom="10dp"
+                        android:textColor="#f0f7f4"
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/accountEmailEt"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:inputType="textEmailAddress"
+                        android:hint="Enter Email"
+                        android:paddingBottom="10dp"
+                        android:textColor="#f0f7f4"
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <EditText
+                        android:id="@+id/accountPasswordEt"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:inputType="textPassword"
+                        android:hint="Enter Password"
+                        android:paddingBottom="10dp"
+                        android:textColor="#f0f7f4"
+                        android:textSize="14sp"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp">
+                    <Button
+                            android:id="@+id/accountEmailCreateActBtn"
+                            android:background="@drawable/bt_shape"
+                            android:stateListAnimator="@drawable/state_list_animator_z"
+                            android:text="Utwórz konto"
+                            android:textColor="#d3d3d3"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+</RelativeLayout>
