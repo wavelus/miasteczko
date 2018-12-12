@@ -9,6 +9,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.wavelus.miasteczko.R
 import kotlinx.android.synthetic.main.activity_menu.*
 
+/**
+ * Menu główne aplikacji
+ */
 class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,19 +25,19 @@ class MenuActivity : AppCompatActivity() {
         addEventBtn.setOnClickListener {
             startActivity(Intent(this, CreateEventActivity::class.java))
         }
-
     }
 
 
+    /** Tworzenie menu opcji - przycisku */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.main_menu,menu)
         return true
     }
 
+    /**Przypisanie akcji w menu opcji*/
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         super.onOptionsItemSelected(item)
-
         if(item != null){
             if(item.itemId == R.id.logoutId){
                 FirebaseAuth.getInstance().signOut()
@@ -42,12 +45,8 @@ class MenuActivity : AppCompatActivity() {
                 finish()
             }else if(item.itemId == R.id.settingsId){
 //                startActivity(Intent(this, SettingsActivity::class.java))
-
             }
         }
-
         return true
     }
-
-
 }

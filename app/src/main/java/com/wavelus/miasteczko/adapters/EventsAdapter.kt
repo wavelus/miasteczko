@@ -1,5 +1,6 @@
 package com.wavelus.miasteczko.adapters
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.R.id.*
+import com.wavelus.miasteczko.activities.EventActivity
 import com.wavelus.miasteczko.models.MyEvent
 
 class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
@@ -39,6 +41,18 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
             eventPlace.text = event.event_place_id
 //            eventStartTime.text = event.event_date_start
 //            eventEndTime.text = event.event_date_end
+
+
+            itemView.setOnClickListener {
+                var myEventIntent = Intent(itemView.context, EventActivity::class.java)
+                myEventIntent.putExtra("event_name", event.event_name)
+                myEventIntent.putExtra("event_owner_id", event.event_owner_id)
+                myEventIntent.putExtra("event_status", event.event_status)
+                myEventIntent.putExtra("event_place_id", event.event_place_id)
+                myEventIntent.putExtra("event_date_start", event.event_date_start)
+                myEventIntent.putExtra("event_date_end", event.event_date_end)
+                itemView.context.startActivity(myEventIntent)
+            }
         }
     }
 

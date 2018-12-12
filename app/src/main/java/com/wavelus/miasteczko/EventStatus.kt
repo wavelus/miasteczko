@@ -1,7 +1,13 @@
 package com.wavelus.miasteczko
 
-enum class EventStatus {
+/**
+ * Możlwie stany wydarzenia
+ */
+enum class EventStatus{
+    /** Wydarzenie jeszcze się nie zaczęło.*/
     SOON,
+    /** Wydarzenie w trakcie.*/
     DURING,
+    /** Wydarzenie zostało zakończone.*/
     AFTER
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -12,8 +13,14 @@ import com.wavelus.miasteczko.EventStatus
 import com.wavelus.miasteczko.R
 import kotlinx.android.synthetic.main.activity_create_event.*
 
+/**
+ *  Klasa odpowiedzialna za dodawania wydarzeń do bazy.
+ *  @author Łukasz Wolski
+ */
 class CreateEventActivity : AppCompatActivity() {
+    /** Punkt wejścia pakietu SDK Firebase Authenticaion*/
     var mAuth: FirebaseAuth? = null
+    /** Referencja do bazy danych*/
     var mDatabase: FirebaseDatabase? = null
 
 
@@ -27,6 +34,8 @@ class CreateEventActivity : AppCompatActivity() {
 
 
         createEventBtn.setOnClickListener {
+            /** ProgressBar w celu uniknięcie utworzenia dwóch takich samych wydarzeń w tym samym czasie*/
+            createEventProgressBarId.visibility= View.VISIBLE
             var eventName = eventNameEt.text.toString().trim()
             var eventPlace = eventPlaceEt.text.toString().trim()
             var eventDateStart = eventDateStartEt.text.toString().trim()
@@ -37,10 +46,18 @@ class CreateEventActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
             }
+            createEventProgressBarId.visibility= View.INVISIBLE
         }
 
     }
 
+    /**
+     * @param eventName:
+     * @param eventPlace:
+     * @param eventDateStart:
+     * @param eventDateEnd:
+     *
+     */
     private fun createEvent(eventName: String, eventPlace: String, eventDateStart:String, eventDateEnd:String){
         var currentUserId = mAuth!!.currentUser!!.uid
         var pushedEventsDatabaseRef = mDatabase!!.reference.child("events").push()

@@ -1,13 +1,23 @@
 package com.wavelus.miasteczko.models
 
+/**
+ * Sposób przechowywania danych o wydarzeniu.
+ */
 class MyEvent() {
+    /** Nazwa wydarzenia*/
     var event_name: String? = null
+    /** Identyfikator właściciela wydarzenia*/
     var event_owner_id: String? = null
+    /** Identyfikator miejsca wydarzenia*/
     var event_place_id: String? = null
+    /** Data/czas rozpoczęcia wydarzenia*/
     var event_date_start: String? = null
+    /** Planowa data/czas zakończenia wydarzenia*/
     var event_date_end: String? = null
+    /** Status wydarzenia*/
     var event_status: String? = null
 
+    /** Konstruktor obiektu*/
     constructor(event_name:String,event_owner_id: String,event_place_id: String,event_date_start: String,
                 event_date_end: String,event_status: String):this(){
         this.event_name = event_name

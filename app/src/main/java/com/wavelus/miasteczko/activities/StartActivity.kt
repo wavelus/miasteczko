@@ -11,10 +11,13 @@ import com.wavelus.miasteczko.activities.login.LoginActivity
 import com.wavelus.miasteczko.activities.signup.SignUpActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
-
+/** Pierwszy ekran. Możliwe przejście do ekranu logowania bądź zakładania konta*/
 class StartActivity : AppCompatActivity() {
+    /** Punkt wejścia pakietu SDK Firebase Authenticaion*/
     var mAuth: FirebaseAuth? = null
+    /** Referencja do bazy danych*/
     var user: FirebaseUser? = null
+    /** Pozwala sprawdzić aktualny stan użytkownika - zalogowany/niezalogowany*/
     var mAuthListener: FirebaseAuth.AuthStateListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +47,17 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
+    /** Przypisanie listenera - sprawdzenie czy użytkownik jest zalogowany*/
     override fun onStart() {
         super.onStart()
         mAuth!!.addAuthStateListener(mAuthListener!!)
     }
 
+    /** Usunięcie listenera*/
     override fun onStop() {
         super.onStop()
-
         if(mAuthListener!=null){
             mAuth!!.removeAuthStateListener(mAuthListener!!)
         }
     }
-    }
+}
