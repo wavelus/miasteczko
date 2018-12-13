@@ -12,6 +12,7 @@ import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.R.id.*
 import com.wavelus.miasteczko.activities.EventActivity
 import com.wavelus.miasteczko.models.MyEvent
+import com.wavelus.miasteczko.models.MyTable
 
 class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
     FirebaseRecyclerAdapter<MyEvent,EventsAdapter.ViewHolder>(option)
@@ -33,12 +34,14 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
         var eventPlace = itemView.findViewById<TextView>(eventPlaceRow)
         var eventStartTime = itemView.findViewById<TextView>(eventStartRow)
         var eventEndTime = itemView.findViewById<TextView>(eventEndRow)
+        var eventPlaceName:String ?= null
 
         fun bindItem(event: MyEvent){
+            eventPlaceName = MyTable.getTableName(event.event_place_id.toString())
             eventName.text = event.event_name
             eventOwner.text = event.event_owner_id
             eventStatus.text = event.event_status
-            eventPlace.text = event.event_place_id
+            eventPlace.text = eventPlaceName
 //            eventStartTime.text = event.event_date_start
 //            eventEndTime.text = event.event_date_end
 
@@ -48,7 +51,7 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
                 myEventIntent.putExtra("event_name", event.event_name)
                 myEventIntent.putExtra("event_owner_id", event.event_owner_id)
                 myEventIntent.putExtra("event_status", event.event_status)
-                myEventIntent.putExtra("event_place_id", event.event_place_id)
+                myEventIntent.putExtra("event_place_name", eventPlaceName)
                 myEventIntent.putExtra("event_date_start", event.event_date_start)
                 myEventIntent.putExtra("event_date_end", event.event_date_end)
                 itemView.context.startActivity(myEventIntent)

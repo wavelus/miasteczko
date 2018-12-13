@@ -63,18 +63,27 @@
                         android:textColor="#f0f7f4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <EditText
-                        android:padding="10dp"
-                        android:id="@+id/eventPlaceEt"
+                <!--<EditText-->
+                        <!--android:padding="10dp"-->
+                        <!--android:id="@+id/eventPlaceEt"-->
+                        <!--android:layout_marginTop="15dp"-->
+                        <!--android:background="@drawable/selector_bg_edit_2"-->
+                        <!--android:hint="Miejsce wydarzenia"-->
+                        <!--android:textCursorDrawable="@drawable/bg_input_cursor_2"-->
+                        <!--android:inputType="text"-->
+                        <!--android:textColor="#f0f7f4"-->
+                        <!--android:textSize="14sp"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"/>-->
+                <Spinner
+                        android:id="@+id/eventPlaceSpinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/selector_bg_edit_2"
-                        android:hint="Miejsce wydarzenia"
-                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
-                        android:inputType="text"
-                        android:textColor="#f0f7f4"
                         android:textSize="14sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:padding="10dp">
+
+                </Spinner>
                 <EditText
                         android:padding="10dp"
                         android:id="@+id/eventDateStartEt"

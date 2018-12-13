@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content">
 
                 <Button
-                        android:id="@+id/tablePiwnaSiedzibaBtn"
+                        android:id="@+id/tableBeerHouseBtn"
                         android:text="Piwna siedziba"
                         android:background="@color/colorPrimaryDark"
                         android:padding="10dp"
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"/>
                 <android.support.v7.widget.RecyclerView
                         android:visibility="gone"
-                        android:id="@+id/tablePiwnaSiedzibaRecyclerView"
+                        android:id="@+id/tableBeerHouseRecyclerView"
                         android:layout_width="368dp"
                         android:layout_height="460dp">
 

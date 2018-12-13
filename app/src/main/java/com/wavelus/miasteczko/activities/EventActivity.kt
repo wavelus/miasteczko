@@ -3,6 +3,7 @@ package com.wavelus.miasteczko.activities
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.wavelus.miasteczko.R
+import com.wavelus.miasteczko.models.MyTable
 import kotlinx.android.synthetic.main.activity_event.*
 
 class EventActivity : AppCompatActivity() {
@@ -18,19 +19,21 @@ class EventActivity : AppCompatActivity() {
         setContentView(R.layout.activity_event)
 
         eventName = intent.extras.getString("event_name")
-        eventOwner = intent.extras.getString("get_owner_id")
+        eventOwner = intent.extras.getString("event_owner_id")
         eventStatus = intent.extras.getString("event_status")
-        eventPlace = intent.extras.getString("event_place_id")
+        eventPlace = intent.extras.getString("event_place_name")
         eventDateStart = intent.extras.getString("event_date_start")
         eventDateEnd = intent.extras.getString("event_date_end")
 
         eventNameTv.text = eventName
-        eventOwnerTv.text = "Organizator" + eventOwner.toString()
+        eventOwnerTv.text = "Organizator" + eventOwner
         eventStatusTv.text = eventStatus
 //        eventNumberOfAttendeesTv
         eventPlaceTv.text = eventPlace
         eventDateStartTv.text = eventDateStart
         eventDateEndTv.text = eventDateEnd
+
+
 
 
     }
