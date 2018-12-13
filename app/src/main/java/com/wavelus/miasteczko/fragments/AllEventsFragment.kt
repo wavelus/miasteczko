@@ -19,17 +19,27 @@ import com.wavelus.miasteczko.models.MyEvent
 
 
 class AllEventsFragment : Fragment() {
-    var queryEventsFromFlanki: Query = FirebaseDatabase.getInstance().reference.child("events")
-    var optionsOfFlanki: FirebaseRecyclerOptions<MyEvent> = FirebaseRecyclerOptions.Builder<MyEvent>()
-        .setQuery(queryEventsFromFlanki,
-            MyEvent::class.java)
-        .setLifecycleOwner(this)
-        .build()
-    var adapterOfFlanki: EventsAdapter = EventsAdapter(optionsOfFlanki)
-    var adapterOfPiwnaSiedziba: EventsAdapter = EventsAdapter(optionsOfFlanki)
+    private lateinit var queryEventsFromFlanki: Query
+    private lateinit var optionsOfFlanki: FirebaseRecyclerOptions<MyEvent>
+    private lateinit var adapterOfFlanki: EventsAdapter
+
+    private lateinit var queryEventsFromBeerHouse: Query
+    private lateinit var optionsOfBeerHouse: FirebaseRecyclerOptions<MyEvent>
+    private lateinit var adapterOfBeerHouse: EventsAdapter
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        queryEventsFromFlanki = FirebaseDatabase.getInstance().reference.child("location_events").child("flanki")
+        optionsOfFlanki = FirebaseRecyclerOptions.Builder<MyEvent>().setQuery(queryEventsFromFlanki,MyEvent::class.java).setLifecycleOwner(this).build()
+        adapterOfFlanki = EventsAdapter(optionsOfFlanki)
+
+        queryEventsFromBeerHouse= FirebaseDatabase.getInstance().reference.child("location_events").child("piwna_siedziba")
+        optionsOfBeerHouse= FirebaseRecyclerOptions.Builder<MyEvent>().setQuery(queryEventsFromBeerHouse,MyEvent::class.java).setLifecycleOwner(this).build()
+        adapterOfBeerHouse= EventsAdapter(optionsOfBeerHouse)
+
         return inflater!!.inflate(R.layout.fragment_all_events, container, false)
     }
 
@@ -39,14 +49,14 @@ class AllEventsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-        var linearLayoutManager2 = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+        var linearLayoutManagerBeerHouse = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         tableFlankiRecyclerView.setHasFixedSize(true)
         tableFlankiRecyclerView.layoutManager = linearLayoutManager
         tableFlankiRecyclerView.adapter = adapterOfFlanki
 
-        tablePiwnaSiedzibaRecyclerView.setHasFixedSize(true)
-        tablePiwnaSiedzibaRecyclerView.layoutManager = linearLayoutManager2
-        tablePiwnaSiedzibaRecyclerView.adapter = adapterOfPiwnaSiedziba
+        tableBeerHouseRecyclerView.setHasFixedSize(true)
+        tableBeerHouseRecyclerView.layoutManager = linearLayoutManagerBeerHouse
+        tableBeerHouseRecyclerView.adapter = adapterOfBeerHouse
 
         tableFlankiBtn.setOnClickListener {
             Toast.makeText(context, "Click!",Toast.LENGTH_LONG).show()
@@ -57,11 +67,11 @@ class AllEventsFragment : Fragment() {
             }
         }
 
-        tablePiwnaSiedzibaBtn.setOnClickListener {
-            if(tablePiwnaSiedzibaRecyclerView.visibility.equals(View.GONE)){
-                tablePiwnaSiedzibaRecyclerView.visibility = View.VISIBLE
+        tableBeerHouseBtn.setOnClickListener {
+            if(tableBeerHouseRecyclerView.visibility.equals(View.GONE)){
+                tableBeerHouseRecyclerView.visibility = View.VISIBLE
             }else{
-                tablePiwnaSiedzibaRecyclerView.visibility = View.GONE
+                tableBeerHouseRecyclerView.visibility = View.GONE
             }
         }
     }
