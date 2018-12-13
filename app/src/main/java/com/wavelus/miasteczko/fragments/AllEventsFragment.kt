@@ -19,6 +19,8 @@ import com.wavelus.miasteczko.models.MyEvent
 
 
 class AllEventsFragment : Fragment() {
+//    private lateinit var
+
     private lateinit var queryEventsFromFlanki: Query
     private lateinit var optionsOfFlanki: FirebaseRecyclerOptions<MyEvent>
     private lateinit var adapterOfFlanki: EventsAdapter
@@ -53,10 +55,12 @@ class AllEventsFragment : Fragment() {
         tableFlankiRecyclerView.setHasFixedSize(true)
         tableFlankiRecyclerView.layoutManager = linearLayoutManager
         tableFlankiRecyclerView.adapter = adapterOfFlanki
+        adapterOfFlanki.notifyDataSetChanged()
 
         tableBeerHouseRecyclerView.setHasFixedSize(true)
         tableBeerHouseRecyclerView.layoutManager = linearLayoutManagerBeerHouse
         tableBeerHouseRecyclerView.adapter = adapterOfBeerHouse
+
 
         tableFlankiBtn.setOnClickListener {
             Toast.makeText(context, "Click!",Toast.LENGTH_LONG).show()

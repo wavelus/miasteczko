@@ -72,11 +72,12 @@ class CreateEventActivity : AppCompatActivity() {
             var eventDateStart = eventDateStartEt.text.toString().trim()
             var eventDateEnd = eventDateEndEt.text.toString().trim()
 
-            if (!TextUtils.isEmpty(eventName)||!TextUtils.isEmpty(eventPlace)||!TextUtils.isEmpty(eventDateStart)||!TextUtils.isEmpty(eventDateEnd)){
+            if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
                 createEvent(eventName,eventPlace,eventDateStart,eventDateEnd)
             }else{
                 Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
             }
+
             createEventProgressBarId.visibility= View.INVISIBLE
         }
 
@@ -99,6 +100,7 @@ class CreateEventActivity : AppCompatActivity() {
         val attendant = HashMap<String,String>()
 
         var eventObject = HashMap<String,Any>()
+        eventObject.put("event_id", event_key)
         eventObject.put("event_name", eventName)
         eventObject.put("event_owner_id", currentUserId)
         eventObject.put("event_place_id", eventPlace)
