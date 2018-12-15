@@ -6,7 +6,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg"
-        tools:context=".activities.login.LoginActivity">
+        tools:context=".activities.login.LoginActivity"
+        android:id="@+id/activity_login_root"
+>
+
 
     <Button
             android:stateListAnimator="@drawable/state_list_animator_z"
