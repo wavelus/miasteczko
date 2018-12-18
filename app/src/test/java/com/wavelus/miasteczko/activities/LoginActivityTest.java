@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 //import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 //import org.robolectric.RuntimeEnvironment;
 //import org.robolectric.annotation.Config;
 //import org.robolectric.shadows.ShadowApplication;
@@ -37,10 +38,12 @@ import static org.robolectric.shadows.ShadowInstrumentation.getInstrumentation;
 //@Config(constants = BuildConfig.class, packageName = "org.khanacademy.android", sdk = 28)
 public class LoginActivityTest {
     private AppCompatActivity activity;
+//    private AppCompatActivity
     private Button button;
 
     @Before
     public void setUp(){
+
         activity = Robolectric.setupActivity(LoginActivity.class);
         button = activity.findViewById(R.id.loginEmailBtn);
     }
@@ -59,5 +62,14 @@ public class LoginActivityTest {
         assertEquals(R.id.activity_login_root, shadowOf(activity).getContentView().getId());
     }
 
+    @Test
+    public void clickingLogin_shouldStartLoginActivity() {
+        LoginActivity activity = Robolectric.setupActivity(LoginActivity.class);
+        activity.findViewById(R.id.loginEmailBtn).performClick();
+
+        Intent expectedIntent = new Intent(activity, LoginEmailActivity.class);
+        Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
+        assertEquals(expectedIntent.getComponent(), actual.getComponent());
+    }
 
 }
