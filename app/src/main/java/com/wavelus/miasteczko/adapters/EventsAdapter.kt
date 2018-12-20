@@ -78,7 +78,8 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
             eventPlaceName = MyTable.getTableName(event.event_place_id.toString())
 
             eventName.text = event.event_name
-            eventStatus.text = event.event_status
+            eventStatus.text = "Wkrótce"
+//            eventStatus.text = event.event_status
             eventPlace.text = eventPlaceName
 //            eventStartTime.text = event.event_date_start
 //            eventEndTime.text = event.event_date_end

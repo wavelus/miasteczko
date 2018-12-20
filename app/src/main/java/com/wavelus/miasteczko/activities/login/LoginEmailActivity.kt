@@ -29,15 +29,16 @@ class LoginEmailActivity : AppCompatActivity() {
             var email = loginEmailEt.text.toString().trim()
             var password = loginEmailPasswordEt.text.toString().trim()
             if (isEmailAndPasswordValid(email,password)){
-//                loginUser(email, password)
-                mUser = EndUser(mAuth!!)
-            var isUserLoggedIn: Boolean = mUser!!.loginUser(email,password)
-
-                if(isUserLoggedIn) {
-                    startNextActivity()
-                }else{
-                Toast.makeText(this, "Błedny email lub hasło", Toast.LENGTH_LONG).show()
-            }
+                loginUser(email, password)
+//                mUser = EndUser(mAuth!!)
+//            var isUserLoggedIn: Boolean = mUser!!.loginUser(email,password,this)
+//
+//
+//                if(isUserLoggedIn) {
+//                    startNextActivity()
+//                }else{
+//                Toast.makeText(this, "Błedny email lub hasło", Toast.LENGTH_LONG).show()
+//            }
 
 
             }else{

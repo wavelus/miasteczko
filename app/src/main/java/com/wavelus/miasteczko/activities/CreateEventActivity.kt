@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,7 +18,6 @@ import com.wavelus.miasteczko.EventStatus
 import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.R.id.snap
 import kotlinx.android.synthetic.main.activity_create_event.*
-import android.widget.Spinner
 import com.wavelus.miasteczko.models.MyTable
 import kotlinx.android.synthetic.main.fragment_all_events.*
 
@@ -61,6 +58,7 @@ class CreateEventActivity : AppCompatActivity() {
             }
 
         }
+        createEventTimePicker.setIs24HourView(true)
 
         createEventBtn.setOnClickListener {
             /** ProgressBar w celu uniknięcie utworzenia dwóch takich samych wydarzeń w tym samym czasie*/
@@ -91,6 +89,7 @@ class CreateEventActivity : AppCompatActivity() {
      *
      */
     private fun createEvent(eventName: String, eventPlace: String, eventDateStart:String, eventDateEnd:String){
+        var selectedDate: Long
         var currentUserId = mAuth!!.currentUser!!.uid
         var eventUsersDatabaseRef = mDatabase!!.reference.child("users")
         var eventsDatabaseRef = mDatabase!!.reference.child("events")
@@ -107,6 +106,7 @@ class CreateEventActivity : AppCompatActivity() {
         eventObject.put("event_date_start", eventDateStart)
         eventObject.put("event_date_end", eventDateEnd)
         eventObject.put("event_status", EventStatus.SOON)
+
 
         attendant[currentUserId] = currentUserId
 //        attendant[currentUserId] = eventUsersDatabaseRef.child("user_id")

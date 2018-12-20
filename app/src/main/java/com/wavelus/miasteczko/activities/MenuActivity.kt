@@ -21,10 +21,20 @@ class MenuActivity : AppCompatActivity() {
         allEventsBtn.setOnClickListener {
             startActivity(Intent(this, EventListActivity::class.java))
         }
+        userEventsBtn.setOnClickListener {
+            startActivity(Intent(this, EventListActivity::class.java))
+        }
+        userCreatedEventsBtnw.setOnClickListener {
+            startActivity(Intent(this, EventListActivity::class.java))
+        }
 
         addEventBtn.setOnClickListener {
             startActivity(Intent(this, CreateEventActivity::class.java))
         }
+        mapBtn.setOnClickListener {
+            startActivity(Intent(this, PlacesActivity::class.java))
+        }
+
     }
 
 
