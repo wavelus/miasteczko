@@ -34,6 +34,9 @@ class MenuActivity : AppCompatActivity() {
         mapBtn.setOnClickListener {
             startActivity(Intent(this, PlacesActivity::class.java))
         }
+        aboutAppBtn.setOnClickListener {
+            startActivity(Intent(this, AboutAppActivity::class.java))
+        }
 
     }
 

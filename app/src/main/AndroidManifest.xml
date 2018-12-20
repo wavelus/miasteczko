@@ -31,7 +31,7 @@
         </activity>
         <activity
                 android:name=".activities.login.LoginEmailActivity"
-                android:label="@string/title_activity_login_email">
+                android:label="@string/loginNameActivity">
         </activity>
         <activity android:name=".activities.signup.CreateEmailAccountActivity">
         </activity>
@@ -40,6 +40,8 @@
         <activity android:name=".activities.EventActivity">
         </activity>
         <activity android:name=".activities.PlacesActivity">
+        </activity>
+        <activity android:name=".activities.AboutAppActivity">
         </activity>
     </application>
 

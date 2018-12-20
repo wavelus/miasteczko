@@ -40,6 +40,7 @@
                     android:layout_marginStart="5dp"/>
             <TextView
                     android:id="@+id/eventStatusRow"
+                    android:visibility="gone"
                     android:textColor="#f0f045"
                     android:layout_marginTop="50dp"
                     android:text="Status"
@@ -59,6 +60,7 @@
                     android:textColor="#f0f045"
                     android:layout_toLeftOf="@id/eventEndRow"
                     android:text="Do: "
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/eventStartRow"/>
@@ -73,7 +75,7 @@
                     android:layout_marginEnd="20dp"/>
             <TextView
                     android:layout_marginTop="5dp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:layout_below="@id/eventStartRow"
                     android:layout_toLeftOf="@id/eventEndRow"
                     android:text="Do: "
@@ -84,7 +86,6 @@
 
             <TextView
                     android:id="@+id/eventEndRow"
-                    android:visibility="invisible"
                     android:layout_marginTop="5dp"
                     android:layout_below="@id/eventStartRow"
                     android:layout_alignParentRight="true"
@@ -92,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:textColor="#f0f045"
                     android:layout_height="wrap_content" android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginEnd="20dp"/>
 
         </RelativeLayout>
 

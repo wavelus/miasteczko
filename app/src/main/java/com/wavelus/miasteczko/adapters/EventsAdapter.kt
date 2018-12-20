@@ -31,7 +31,9 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
         holder.bindItem(model)
         eventUserDatabaseReference = FirebaseDatabase.getInstance().reference.child("users").child(model.event_owner_id.toString())
         var eventAttendeesDatabaseReference = FirebaseDatabase.getInstance().reference.child("event_attendees").child(model.event_id.toString())
-        Log.d("taggg", model.event_id)
+//        Log.d("taggg", model.event_id)
+
+        holder.myEventIntent.putExtra("event_owner_id",model.event_owner_id.toString())
         getDataFromOtherCollections(eventUserDatabaseReference, holder)
         getNumberElementsInCollection(eventAttendeesDatabaseReference, holder)
     }
@@ -81,8 +83,8 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
             eventStatus.text = "Wkrótce"
 //            eventStatus.text = event.event_status
             eventPlace.text = eventPlaceName
-//            eventStartTime.text = event.event_date_start
-//            eventEndTime.text = event.event_date_end
+            eventStartTime.text = event.event_date_start
+            eventEndTime.text = event.event_date_end
 
             itemView.setOnClickListener {
                 myEventIntent.putExtra("event_name", event.event_name)

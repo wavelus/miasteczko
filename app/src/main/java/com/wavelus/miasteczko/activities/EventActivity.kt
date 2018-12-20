@@ -2,6 +2,8 @@ package com.wavelus.miasteczko.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
@@ -17,6 +19,7 @@ class EventActivity : AppCompatActivity() {
 
     var eventName: String?=null
     var eventOwner: String?=null
+    var eventOwnerId: String?=null
     var eventStatus: String?=null
     var eventPlace: String?=null
     var eventDateStart: String?=null
@@ -29,9 +32,11 @@ class EventActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
+        var currentUserId = mAuth!!.currentUser!!.uid
 
         eventName = intent.extras.getString("event_name")
         eventOwner = intent.extras.getString("event_owner_name")
+        eventOwnerId = intent.extras.getString("event_owner_id")
         eventStatus = intent.extras.getString("event_status")
         eventPlace = intent.extras.getString("event_place_name")
         eventDateStart = intent.extras.getString("event_date_start")
@@ -48,7 +53,23 @@ class EventActivity : AppCompatActivity() {
         eventDateEndTv.text = eventDateEnd
 
         joinToEvent.setOnClickListener {
+            joinToEvent.visibility = View.GONE
+            disJoinToEvent.visibility = View.VISIBLE
+        }
+        disJoinToEvent.setOnClickListener {
+            disJoinToEvent.visibility = View.GONE
+            joinToEvent.visibility = View.VISIBLE
+        }
+        Log.d("TAGGG", "$currentUserId  $eventOwner")
+        if (currentUserId.equals(eventOwnerId)){
+            removeEvent.visibility = View.VISIBLE
+        }else{
+            removeEvent.visibility = View.GONE
+        }
 
+        removeEvent.setOnClickListener {
+            removeEvent.visibility = View.GONE
+            finish()
         }
 
     }

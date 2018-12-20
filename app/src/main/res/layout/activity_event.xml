@@ -107,7 +107,7 @@
             android:background="@drawable/bt_shape"
             android:textColor="#f0f7f4"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/removeEvent" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/joinToEvent"/>
+            android:id="@+id/removeEvent"
+            android:layout_marginBottom="44dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
