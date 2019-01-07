@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import com.wavelus.miasteczko.R
 
 
-class ObservedEventsFragment : Fragment() {
+class AGHEvents : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

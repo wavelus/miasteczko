@@ -55,8 +55,8 @@ class LoginEmailActivity : AppCompatActivity() {
                 //var username = email.split("@")[0]
                 var menuIntent = Intent(this, MenuActivity::class.java)
                 //menuIntent.putExtra("name", username)
+                finishAffinity()
                 startActivity(menuIntent)
-                finish()
             }else{
                 Toast.makeText(this, "Błedny email lub hasło", Toast.LENGTH_LONG).show()
             }

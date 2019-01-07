@@ -33,6 +33,7 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
         var eventAttendeesDatabaseReference = FirebaseDatabase.getInstance().reference.child("event_attendees").child(model.event_id.toString())
 //        Log.d("taggg", model.event_id)
 
+        holder.myEventIntent.putExtra("event_id", model.event_id.toString())
         holder.myEventIntent.putExtra("event_owner_id",model.event_owner_id.toString())
         getDataFromOtherCollections(eventUserDatabaseReference, holder)
         getNumberElementsInCollection(eventAttendeesDatabaseReference, holder)
@@ -44,9 +45,9 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
             }
 
             override fun onDataChange(data: DataSnapshot) {
-                Log.d("taggg", data.childrenCount.toString())
+//                Log.d("taggg", data.childrenCount.toString())
                 var numberOfAttendees = data.childrenCount.toString()
-                Log.d("taggg", numberOfAttendees)
+//                Log.d("taggg", numberOfAttendees)
                 holderInOuterFunctionGetData.myEventIntent.putExtra("event_number_attendees", numberOfAttendees)
             }
         })

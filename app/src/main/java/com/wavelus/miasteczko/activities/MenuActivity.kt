@@ -57,7 +57,7 @@ class MenuActivity : AppCompatActivity() {
                 startActivity(Intent(this,StartActivity::class.java))
                 finish()
             }else if(item.itemId == R.id.settingsId){
-//                startActivity(Intent(this, SettingsActivity::class.java))
+                startActivity(Intent(this, AboutAppActivity::class.java))
             }
         }
         return true

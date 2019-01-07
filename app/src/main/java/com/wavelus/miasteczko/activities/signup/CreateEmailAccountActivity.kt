@@ -30,7 +30,7 @@ class CreateEmailAccountActivity : AppCompatActivity() {
             var password = accountPasswordEt.text.toString().trim()
             var displayName = accountDisplayNameEt.text.toString().trim()
 
-            if(!TextUtils.isEmpty(email)||!TextUtils.isEmpty(password)||!TextUtils.isEmpty(displayName)){
+            if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(password)&&!TextUtils.isEmpty(displayName)){
                 createAccount(email,password,displayName)
             }else{
                 Toast.makeText(this,"Wypełnij pola", Toast.LENGTH_LONG).show()

@@ -1,6 +1,5 @@
 package com.wavelus.miasteczko.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -16,10 +15,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.wavelus.miasteczko.EventStatus
 import com.wavelus.miasteczko.R
-import com.wavelus.miasteczko.R.id.snap
 import kotlinx.android.synthetic.main.activity_create_event.*
 import com.wavelus.miasteczko.models.MyTable
-import kotlinx.android.synthetic.main.fragment_all_events.*
 
 
 /**
@@ -32,7 +29,7 @@ class CreateEventActivity : AppCompatActivity() {
     /** Referencja do bazy danych*/
     var mDatabase: FirebaseDatabase? = null
 
-    var eventPlaces = arrayOf("Flankowy Zaułek","Piwna Siedziba")
+    var eventPlaces = arrayOf("Flankowy Zaułek","Sportowe Kosz'ary","Piwna Siedziba","Śpiewające Gitary")
 
     var eventPlace = "Place"
     lateinit var spinner: Spinner
@@ -58,7 +55,7 @@ class CreateEventActivity : AppCompatActivity() {
             }
 
         }
-        createEventTimePicker.setIs24HourView(true)
+//        createEventTimePicker.setIs24HourView(true)
 
         createEventBtn.setOnClickListener {
             /** ProgressBar w celu uniknięcie utworzenia dwóch takich samych wydarzeń w tym samym czasie*/
@@ -96,7 +93,7 @@ class CreateEventActivity : AppCompatActivity() {
         var pushedEventsDatabaseRef = mDatabase!!.reference.child("location_events").child(eventPlace).push()
         var eventAttendeesDatabaseRef = mDatabase!!.reference.child("event_attendees")
         var event_key: String = pushedEventsDatabaseRef.key.toString()
-        val attendant = HashMap<String,String>()
+        val attendee = HashMap<String,String>()
 
         var eventObject = HashMap<String,Any>()
         eventObject.put("event_id", event_key)
@@ -108,32 +105,33 @@ class CreateEventActivity : AppCompatActivity() {
         eventObject.put("event_status", EventStatus.SOON)
 
 
-        attendant[currentUserId] = currentUserId
+        attendee.put("user_id", currentUserId)
+//        attendee[currentUserId] = currentUserId
 //        attendant[currentUserId] = eventUsersDatabaseRef.child("user_id")
         pushedEventsDatabaseRef.setValue(eventObject).addOnCompleteListener {
             task: Task<Void> ->
             if (task.isSuccessful){
                 eventsDatabaseRef.child(event_key).setValue(eventObject)
-                eventAttendeesDatabaseRef.child(event_key).setValue(attendant)
-                eventAttendeesDatabaseRef.child(event_key).addListenerForSingleValueEvent(object: ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                    }
-
-                    override fun onDataChange(data: DataSnapshot) {
-                        Log.d("TAG", data.child("user_id").value.toString())
-//                        Log.d("TAG", data.childrenCount.toString())
-                        eventUsersDatabaseRef.child(data.child("user_id").value.toString()).addListenerForSingleValueEvent(object: ValueEventListener{
-                            override fun onCancelled(p0: DatabaseError) {
-                            }
-
-                            override fun onDataChange(p0: DataSnapshot) {
-                                Log.d("TAG", p0.child("display_name").value.toString())
-                            }
-
-                        })
-
-                    }
-                })
+                eventAttendeesDatabaseRef.child(event_key).push().setValue(attendee)
+//                eventAttendeesDatabaseRef.child(event_key).addListenerForSingleValueEvent(object: ValueEventListener{
+//                    override fun onCancelled(p0: DatabaseError) {
+//                    }
+//
+//                    override fun onDataChange(data: DataSnapshot) {
+//                        Log.d("TAG", data.child("user_id").value.toString())
+////                        Log.d("TAG", data.childrenCount.toString())
+//                        eventUsersDatabaseRef.child(data.child("user_id").value.toString()).addListenerForSingleValueEvent(object: ValueEventListener{
+//                            override fun onCancelled(p0: DatabaseError) {
+//                            }
+//
+//                            override fun onDataChange(p0: DataSnapshot) {
+//                                Log.d("TAG", p0.child("display_name").value.toString())
+//                            }
+//
+//                        })
+//
+//                    }
+//                })
                 startActivity(Intent(this, MenuActivity::class.java))
                 finish()
             }else{
