@@ -15,7 +15,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-                android:background="#0D2C54"
+                android:background="#0D5C54"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp"
@@ -23,13 +23,14 @@
                 android:layout_height="match_parent">
             <TextView
                     android:text="Aktualnie wybrane miejsce"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#F0FF0F"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
                     android:id="@+id/menuTownTV"
                     android:padding="10dp"
-                    android:text="Miasteczko"
+                    android:background="#002020"
+                    android:text="Miasteczko AGH"
                     android:textColor="@color/colorPrimary"
                     android:textSize="24sp"
                     android:layout_width="wrap_content"

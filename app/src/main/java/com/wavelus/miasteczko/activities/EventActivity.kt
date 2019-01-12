@@ -13,28 +13,29 @@ import com.wavelus.miasteczko.adapters.EventsAdapter
 import com.wavelus.miasteczko.models.MyTable
 import kotlinx.android.synthetic.main.activity_event.*
 
+/** Aktywność wyświetlająca informacje o wydarzeniu */
 class EventActivity : AppCompatActivity() {
     /** Punkt wejścia pakietu SDK Firebase Authenticaion*/
     var mAuth: FirebaseAuth? = null
     /** Referencja do bazy danych*/
     var mDatabase: FirebaseDatabase? = null
 
-    lateinit var eventAttendeesDatabaseReference: DatabaseReference
+    private lateinit var eventAttendeesDatabaseReference: DatabaseReference
 
-    lateinit var currentUserId: String
-    val attendee = HashMap<String,String>()
+    private lateinit var currentUserId: String
+    private val attendee = HashMap<String,String>()
 
-    var eventId: String? = null
-    var eventName: String?=null
-    var eventOwner: String?=null
-    var eventOwnerId: String?=null
-    var eventStatus: String?=null
-    var eventPlace: String?=null
-    var eventDateStart: String?=null
-    var eventDateEnd: String?=null
-    var eventNumberOfAttendees: String?=null
-    var isUserAttendee: Query? = null
+    private var eventId: String? = null
+    private var eventName: String?=null
+    private var eventOwner: String?=null
+    private var eventOwnerId: String?=null
+    private var eventStatus: String?=null
+    private var eventPlace: String?=null
+    private var eventDateStart: String?=null
+    private var eventDateEnd: String?=null
+    private var eventNumberOfAttendees: String?=null
 
+    /** Akcja podejmowana podczas tworzenia aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
@@ -96,7 +97,6 @@ class EventActivity : AppCompatActivity() {
             }
         )
 
-
         joinToEvent.setOnClickListener {
             joinToEvent(currentUserId, eventAttendeesDatabaseReference)
 
@@ -105,7 +105,6 @@ class EventActivity : AppCompatActivity() {
             leaveEvent(currentUserId,eventAttendeesDatabaseReference)
 
         }
-//        Log.d("TAGGG", "$currentUserId  $eventOwner")
         if (currentUserId.equals(eventOwnerId)){
             removeEvent.visibility = View.VISIBLE
         }else{
@@ -119,6 +118,10 @@ class EventActivity : AppCompatActivity() {
 
     }
 
+    /** Funkcja umożliwiająca dołączenie do wydarzenia
+     * @param uid: ID użytkownika
+     * @param eventAttendeesDatabaseReference: Referencja do bazy danych
+     * */
 
     fun joinToEvent(uid: String, eventAttendeesDatabaseReference: DatabaseReference){
         val attendee = HashMap<String,String>()
@@ -132,7 +135,10 @@ class EventActivity : AppCompatActivity() {
         }
     }
 
-
+    /** Funkcja umożliwiająca upuszczenie wydarzenia
+     * @param uid: ID użytkownika
+     * @param eventAttendeesDatabaseReference: Referencja do bazy danych
+     * */
     fun leaveEvent(uid: String, eventAttendeesDatabaseReference: DatabaseReference){
         eventAttendeesDatabaseReference.orderByChild("user_id").equalTo(uid).addListenerForSingleValueEvent(
             object : ValueEventListener{
@@ -149,7 +155,6 @@ class EventActivity : AppCompatActivity() {
                             joinToEvent.visibility = View.VISIBLE
                         }
                     }
-                    Log.d("taggg", "${data.key} ${data.value}  ${key}")
                 }
 
             }

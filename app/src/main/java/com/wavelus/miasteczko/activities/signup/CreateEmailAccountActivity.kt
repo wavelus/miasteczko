@@ -13,10 +13,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.activities.MenuActivity
 import kotlinx.android.synthetic.main.activity_create_email_account.*
-
+/**
+ * Klasa odpowiedzialna za tworzenie konta przy pomocy adresu email*/
 class CreateEmailAccountActivity : AppCompatActivity() {
+    /**Zmienna przechowujaca referencję do konta użytkownika w usłudze Firebase*/
     var mAuth: FirebaseAuth? = null;
+    /**Zmienna przechowujaca referencję do bazy danych w usłudze Firebase*/
     var mDatabase: DatabaseReference? = null;
+
+    /**Akcja podejmowana w trakcie tworzenia aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_email_account)
@@ -38,7 +43,10 @@ class CreateEmailAccountActivity : AppCompatActivity() {
         }
 
     }
-
+    /**Funkcja umożliwiająca utworzenie konta
+     * @param email: Adres email podany przez użytkownika podczas rejestracji
+     * @param password: Hasło podane przez użytkownika podczas rejestracji
+     * @param displayName: Nick użytkownika*/
     fun createAccount(email: String, password: String, displayName:String){
         mAuth!!.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 task: Task<AuthResult> ->

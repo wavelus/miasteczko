@@ -17,7 +17,8 @@ import com.google.firebase.database.Query
 import com.wavelus.miasteczko.adapters.EventsAdapter
 import com.wavelus.miasteczko.models.MyEvent
 
-
+/**
+ * Fragment wyświetlający wszystkie wydarzenia*/
 class AllEventsFragment : Fragment() {
 //    private lateinit var
 
@@ -36,7 +37,7 @@ class AllEventsFragment : Fragment() {
     private lateinit var queryEventsFromGuitar: Query
     private lateinit var optionsOfGuitar: FirebaseRecyclerOptions<MyEvent>
     private lateinit var adapterOfGuitar: EventsAdapter
-
+    /** Akcja podejmowana podczas tworzenia widoku*/
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -60,7 +61,7 @@ class AllEventsFragment : Fragment() {
     }
 
 
-
+    /** Akcja podejmowana po utworzeniu widoku*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

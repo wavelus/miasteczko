@@ -14,12 +14,13 @@ import com.google.firebase.database.Query
 import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.adapters.EventsAdapter
 import com.wavelus.miasteczko.models.MyEvent
-import kotlinx.android.synthetic.main.fragment_all_events.*
 import kotlinx.android.synthetic.main.fragment_observed_events.*
+import kotlinx.android.synthetic.main.fragment_user_events.*
 
-/**@see SectionPagerAdapter
- * Fragment wyświetlający wydarzeniu na Miasteczku AGH*/
-class AGHEvents : Fragment() {
+/**
+ * Fragment wyświetlający wydarzeniu w parku Czyżyny Politechnika*/
+class PolytechnicEvents : Fragment() {
+
     private lateinit var queryEventsFromFlanki: Query
     private lateinit var optionsOfFlanki: FirebaseRecyclerOptions<MyEvent>
     private lateinit var adapterOfFlanki: EventsAdapter
@@ -35,28 +36,27 @@ class AGHEvents : Fragment() {
     private lateinit var queryEventsFromGuitar: Query
     private lateinit var optionsOfGuitar: FirebaseRecyclerOptions<MyEvent>
     private lateinit var adapterOfGuitar: EventsAdapter
-
     /** Akcja podejmowana podczas tworzenia widoku*/
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        queryEventsFromFlanki = FirebaseDatabase.getInstance().reference.child("town_agh").child("flanki")
+        queryEventsFromFlanki = FirebaseDatabase.getInstance().reference.child("politechnika").child("flanki")
         optionsOfFlanki = FirebaseRecyclerOptions.Builder<MyEvent>().setQuery(queryEventsFromFlanki, MyEvent::class.java).setLifecycleOwner(this).build()
         adapterOfFlanki = EventsAdapter(optionsOfFlanki)
 
-        queryEventsFromSport = FirebaseDatabase.getInstance().reference.child("town_agh").child("koszary")
+        queryEventsFromSport = FirebaseDatabase.getInstance().reference.child("politechnika").child("koszary")
         optionsOfSport = FirebaseRecyclerOptions.Builder<MyEvent>().setQuery(queryEventsFromSport, MyEvent::class.java).setLifecycleOwner(this).build()
         adapterOfSport = EventsAdapter(optionsOfSport)
 
-        queryEventsFromBeerHouse= FirebaseDatabase.getInstance().reference.child("town_agh").child("piwna_siedziba")
+        queryEventsFromBeerHouse= FirebaseDatabase.getInstance().reference.child("politechnika").child("piwna_siedziba")
         optionsOfBeerHouse= FirebaseRecyclerOptions.Builder<MyEvent>().setQuery(queryEventsFromBeerHouse, MyEvent::class.java).setLifecycleOwner(this).build()
         adapterOfBeerHouse= EventsAdapter(optionsOfBeerHouse)
 
-        queryEventsFromGuitar= FirebaseDatabase.getInstance().reference.child("town_agh").child("gitary")
+        queryEventsFromGuitar= FirebaseDatabase.getInstance().reference.child("politechnika").child("gitary")
         optionsOfGuitar= FirebaseRecyclerOptions.Builder<MyEvent>().setQuery(queryEventsFromGuitar, MyEvent::class.java).setLifecycleOwner(this).build()
         adapterOfGuitar= EventsAdapter(optionsOfGuitar)
 
-        return inflater!!.inflate(R.layout.fragment_observed_events, container, false)
+        return inflater.inflate(R.layout.fragment_user_events, container, false)
     }
 
 
@@ -69,58 +69,59 @@ class AGHEvents : Fragment() {
         var linearLayoutManagerBeerHouse = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         var linearLayoutManagerGuitar = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
 
-        tableAGHFlankiRecyclerView.setHasFixedSize(true)
-        tableAGHFlankiRecyclerView.layoutManager = linearLayoutManager
-        tableAGHFlankiRecyclerView.adapter = adapterOfFlanki
+        tablePolyFlankiRecyclerView.setHasFixedSize(true)
+        tablePolyFlankiRecyclerView.layoutManager = linearLayoutManager
+        tablePolyFlankiRecyclerView.adapter = adapterOfFlanki
         adapterOfFlanki.notifyDataSetChanged()
 
-        tableAGHSportRecyclerView.setHasFixedSize(true)
-        tableAGHSportRecyclerView.layoutManager = linearLayoutManagerSport
-        tableAGHSportRecyclerView.adapter = adapterOfSport
+        tablePolySportRecyclerView.setHasFixedSize(true)
+        tablePolySportRecyclerView.layoutManager = linearLayoutManagerSport
+        tablePolySportRecyclerView.adapter = adapterOfSport
 
-        tableAGHBeerHouseRecyclerView.setHasFixedSize(true)
-        tableAGHBeerHouseRecyclerView.layoutManager = linearLayoutManagerBeerHouse
-        tableAGHBeerHouseRecyclerView.adapter = adapterOfBeerHouse
+        tablePolyBeerHouseRecyclerView.setHasFixedSize(true)
+        tablePolyBeerHouseRecyclerView.layoutManager = linearLayoutManagerBeerHouse
+        tablePolyBeerHouseRecyclerView.adapter = adapterOfBeerHouse
 
-        tableAGHGuitarRecyclerView.setHasFixedSize(true)
-        tableAGHGuitarRecyclerView.layoutManager = linearLayoutManagerGuitar
-        tableAGHGuitarRecyclerView.adapter = adapterOfGuitar
+        tablePolyGuitarRecyclerView.setHasFixedSize(true)
+        tablePolyGuitarRecyclerView.layoutManager = linearLayoutManagerGuitar
+        tablePolyGuitarRecyclerView.adapter = adapterOfGuitar
 
 
-        tableAGHFlankiBtn.setOnClickListener {
+        tablePolyFlankiBtn.setOnClickListener {
             //            Toast.makeText(context, "Click!",Toast.LENGTH_LONG).show()
-            if(tableAGHFlankiRecyclerView.visibility.equals(View.GONE) ){
-                tableAGHFlankiRecyclerView.visibility= View.VISIBLE
+            if(tablePolyFlankiRecyclerView.visibility.equals(View.GONE) ){
+                tablePolyFlankiRecyclerView.visibility= View.VISIBLE
             }else{
-                tableAGHFlankiRecyclerView.visibility= View.GONE
+                tablePolyFlankiRecyclerView.visibility= View.GONE
             }
         }
 
-        tableAGHSportBtn.setOnClickListener {
-            if(tableAGHSportRecyclerView.visibility.equals(View.GONE)){
-                tableAGHSportRecyclerView.visibility = View.VISIBLE
+        tablePolySportBtn.setOnClickListener {
+            if(tablePolySportRecyclerView.visibility.equals(View.GONE)){
+                tablePolySportRecyclerView.visibility = View.VISIBLE
             }else{
-                tableAGHSportRecyclerView.visibility = View.GONE
+                tablePolySportRecyclerView.visibility = View.GONE
             }
         }
 
-        tableAGHBeerHouseBtn.setOnClickListener {
-            if(tableAGHBeerHouseRecyclerView.visibility.equals(View.GONE)){
-                tableAGHBeerHouseRecyclerView.visibility = View.VISIBLE
+        tablePolyBeerHouseBtn.setOnClickListener {
+            if(tablePolyBeerHouseRecyclerView.visibility.equals(View.GONE)){
+                tablePolyBeerHouseRecyclerView.visibility = View.VISIBLE
             }else{
-                tableAGHBeerHouseRecyclerView.visibility = View.GONE
+                tablePolyBeerHouseRecyclerView.visibility = View.GONE
             }
         }
 
-        tableAGHGuitarBtn.setOnClickListener {
-            if(tableAGHGuitarRecyclerView.visibility.equals(View.GONE)){
-                tableAGHGuitarRecyclerView.visibility = View.VISIBLE
+        tablePolyGuitarBtn.setOnClickListener {
+            if(tablePolyGuitarRecyclerView.visibility.equals(View.GONE)){
+                tablePolyGuitarRecyclerView.visibility = View.VISIBLE
             }else{
-                tableAGHGuitarRecyclerView.visibility = View.GONE
+                tablePolyGuitarRecyclerView.visibility = View.GONE
             }
 
         }
 
     }
+
 
 }

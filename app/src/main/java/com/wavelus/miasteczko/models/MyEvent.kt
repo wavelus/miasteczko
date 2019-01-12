@@ -4,6 +4,7 @@ package com.wavelus.miasteczko.models
  * Sposób przechowywania danych o wydarzeniu.
  */
 class MyEvent() {
+    /** Identyfikator wydarzenia*/
     var event_id: String? = null
     /** Nazwa wydarzenia*/
     var event_name: String? = null

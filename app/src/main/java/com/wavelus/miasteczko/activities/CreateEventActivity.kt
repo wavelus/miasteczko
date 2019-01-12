@@ -29,11 +29,11 @@ class CreateEventActivity : AppCompatActivity() {
     /** Referencja do bazy danych*/
     var mDatabase: FirebaseDatabase? = null
 
-    var eventPlaces = arrayOf("Flankowy Zaułek","Sportowe Kosz'ary","Piwna Siedziba","Śpiewające Gitary")
-
+    private var eventPlaces = arrayOf("Flankowy Zaułek","Sportowe Kosz'ary","Piwna Siedziba","Śpiewające Gitary")
+    /** Miejsce wydarzenia wybrane przez użytkownika*/
     var eventPlace = "Place"
-    lateinit var spinner: Spinner
-
+    private lateinit var spinner: Spinner
+    /** Akcja podejmowana pod utworzeniu aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_event)
@@ -61,14 +61,14 @@ class CreateEventActivity : AppCompatActivity() {
             /** ProgressBar w celu uniknięcie utworzenia dwóch takich samych wydarzeń w tym samym czasie*/
             createEventProgressBarId.visibility= View.VISIBLE
 
+            var eventTownName = intent.extras.getString("townName").toString()
 
             var eventName = eventNameEt.text.toString().trim()
-//            var eventPlace = eventPlaceEt.text.toString().trim()
             var eventDateStart = eventDateStartEt.text.toString().trim()
             var eventDateEnd = eventDateEndEt.text.toString().trim()
 
             if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
-                createEvent(eventName,eventPlace,eventDateStart,eventDateEnd)
+                createEvent(eventName,eventPlace,eventTownName,eventDateStart,eventDateEnd)
             }else{
                 Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
             }
@@ -85,13 +85,14 @@ class CreateEventActivity : AppCompatActivity() {
      * @param eventDateEnd:
      *
      */
-    private fun createEvent(eventName: String, eventPlace: String, eventDateStart:String, eventDateEnd:String){
+    private fun createEvent(eventName: String, eventPlace: String, eventTownName: String, eventDateStart:String, eventDateEnd:String){
         var selectedDate: Long
         var currentUserId = mAuth!!.currentUser!!.uid
         var eventUsersDatabaseRef = mDatabase!!.reference.child("users")
         var eventsDatabaseRef = mDatabase!!.reference.child("events")
         var pushedEventsDatabaseRef = mDatabase!!.reference.child("location_events").child(eventPlace).push()
         var eventAttendeesDatabaseRef = mDatabase!!.reference.child("event_attendees")
+        var pushedeventsInTownDatabaseRef = mDatabase!!.reference.child(MyTable.getTownId(eventTownName)).child(eventPlace)
         var event_key: String = pushedEventsDatabaseRef.key.toString()
         val attendee = HashMap<String,String>()
 
@@ -103,7 +104,7 @@ class CreateEventActivity : AppCompatActivity() {
         eventObject.put("event_date_start", eventDateStart)
         eventObject.put("event_date_end", eventDateEnd)
         eventObject.put("event_status", EventStatus.SOON)
-
+        eventObject.put("event_town_name", eventTownName)
 
         attendee.put("user_id", currentUserId)
 //        attendee[currentUserId] = currentUserId
@@ -111,6 +112,7 @@ class CreateEventActivity : AppCompatActivity() {
         pushedEventsDatabaseRef.setValue(eventObject).addOnCompleteListener {
             task: Task<Void> ->
             if (task.isSuccessful){
+                pushedeventsInTownDatabaseRef.child(event_key).setValue(eventObject)
                 eventsDatabaseRef.child(event_key).setValue(eventObject)
                 eventAttendeesDatabaseRef.child(event_key).push().setValue(attendee)
 //                eventAttendeesDatabaseRef.child(event_key).addListenerForSingleValueEvent(object: ValueEventListener{
@@ -132,7 +134,7 @@ class CreateEventActivity : AppCompatActivity() {
 //
 //                    }
 //                })
-                startActivity(Intent(this, MenuActivity::class.java))
+//                startActivity(Intent(this, MenuActivity::class.java))
                 finish()
             }else{
                 Toast.makeText(this, "Nie udało się utworzyć wydarzenia", Toast.LENGTH_LONG).show()
