@@ -79,7 +79,7 @@
             android:stateListAnimator="@drawable/state_list_animator_z"
             android:background="@color/colorAccent"
             android:textColor="@color/grey_100"
-            android:text="Utworzone wydarzenia"
+            android:text="Czyżyńskie wydarzenia"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/userCreatedEventsBtnw"
@@ -94,7 +94,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:id="@+id/mapBtn" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/userCreatedEventsBtnw" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchEventsByTagBtn" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
     <Button
@@ -108,5 +108,17 @@
             app:layout_constraintTop_toBottomOf="@+id/mapBtn" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
+    <Button
+            android:stateListAnimator="@drawable/state_list_animator_z"
+            android:background="@color/colorAccent"
+            android:textColor="@color/grey_100"
+            android:text="Wyszukaj wydarzenie za pomocą tagu"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchEventsByTagBtn" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/userCreatedEventsBtnw" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+
 
 </android.support.constraint.ConstraintLayout>

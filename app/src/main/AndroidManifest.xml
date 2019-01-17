@@ -43,6 +43,8 @@
         </activity>
         <activity android:name=".activities.AboutAppActivity">
         </activity>
+        <activity android:name=".activities.SearchEventsActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,22 +1,19 @@
 package com.wavelus.miasteczko.activities
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.wavelus.miasteczko.EventStatus
 import com.wavelus.miasteczko.R
 import kotlinx.android.synthetic.main.activity_create_event.*
 import com.wavelus.miasteczko.models.MyTable
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -34,10 +31,14 @@ class CreateEventActivity : AppCompatActivity() {
     var eventPlace = "Place"
     private lateinit var spinner: Spinner
     /** Akcja podejmowana pod utworzeniu aktywności*/
+    private  var sdf = SimpleDateFormat("yyy/MM/dd")
+    private  var stf = SimpleDateFormat("HH:mm")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_event)
 
+        eventDateStartEt.setText(sdf.format(Date()))
+        eventDateEndEt.setText(stf.format(Date()))
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
 
@@ -51,11 +52,9 @@ class CreateEventActivity : AppCompatActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 eventPlace = MyTable.getTableId(position)
-//                eventPlace = getTableId(position)
             }
 
         }
-//        createEventTimePicker.setIs24HourView(true)
 
         createEventBtn.setOnClickListener {
             /** ProgressBar w celu uniknięcie utworzenia dwóch takich samych wydarzeń w tym samym czasie*/
@@ -66,9 +65,9 @@ class CreateEventActivity : AppCompatActivity() {
             var eventName = eventNameEt.text.toString().trim()
             var eventDateStart = eventDateStartEt.text.toString().trim()
             var eventDateEnd = eventDateEndEt.text.toString().trim()
-
+            var threeTags: ArrayList<String> = takeThreeTagsFromString(tagsCreateEventEt.text.toString().trim())
             if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
-                createEvent(eventName,eventPlace,eventTownName,eventDateStart,eventDateEnd)
+                createEvent(eventName,eventPlace,eventTownName,eventDateStart,eventDateEnd, threeTags)
             }else{
                 Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
             }
@@ -78,17 +77,30 @@ class CreateEventActivity : AppCompatActivity() {
 
     }
 
+    private fun takeThreeTagsFromString(tagString: String): ArrayList<String>{
+        var tagStringArray = tagString.trim().split(" ")
+        var arrayLenght = tagStringArray.size
+        var threeTags: ArrayList<String> = ArrayList()
+        for(i in 0..2){
+            if(i<arrayLenght){
+                threeTags.add(tagStringArray[i])
+            }else{
+                threeTags.add("")
+            }
+        }
+        return threeTags
+    }
+
     /**
-     * @param eventName:
-     * @param eventPlace:
-     * @param eventDateStart:
-     * @param eventDateEnd:
+     * @param eventName: Nazwa wydarzenia
+     * @param eventPlace: Miejsce wydarzenia
+     * @param eventDateStart: Data rozpoczęcia
+     * @param eventDateEnd: Data zakończenia
      *
+     * Funkcja tworzy obiekt wydarzenie i umieszcza je w bazie danych
      */
-    private fun createEvent(eventName: String, eventPlace: String, eventTownName: String, eventDateStart:String, eventDateEnd:String){
-        var selectedDate: Long
+    fun createEvent(eventName: String, eventPlace: String, eventTownName: String, eventDateStart:String, eventDateEnd:String, tags:ArrayList<String>){
         var currentUserId = mAuth!!.currentUser!!.uid
-        var eventUsersDatabaseRef = mDatabase!!.reference.child("users")
         var eventsDatabaseRef = mDatabase!!.reference.child("events")
         var pushedEventsDatabaseRef = mDatabase!!.reference.child("location_events").child(eventPlace).push()
         var eventAttendeesDatabaseRef = mDatabase!!.reference.child("event_attendees")
@@ -105,36 +117,17 @@ class CreateEventActivity : AppCompatActivity() {
         eventObject.put("event_date_end", eventDateEnd)
         eventObject.put("event_status", EventStatus.SOON)
         eventObject.put("event_town_name", eventTownName)
+        eventObject.put("first_tag", tags[0])
+        eventObject.put("second_tag", tags[1])
+        eventObject.put("third_tag", tags[2])
 
         attendee.put("user_id", currentUserId)
-//        attendee[currentUserId] = currentUserId
-//        attendant[currentUserId] = eventUsersDatabaseRef.child("user_id")
         pushedEventsDatabaseRef.setValue(eventObject).addOnCompleteListener {
             task: Task<Void> ->
             if (task.isSuccessful){
                 pushedeventsInTownDatabaseRef.child(event_key).setValue(eventObject)
                 eventsDatabaseRef.child(event_key).setValue(eventObject)
                 eventAttendeesDatabaseRef.child(event_key).push().setValue(attendee)
-//                eventAttendeesDatabaseRef.child(event_key).addListenerForSingleValueEvent(object: ValueEventListener{
-//                    override fun onCancelled(p0: DatabaseError) {
-//                    }
-//
-//                    override fun onDataChange(data: DataSnapshot) {
-//                        Log.d("TAG", data.child("user_id").value.toString())
-////                        Log.d("TAG", data.childrenCount.toString())
-//                        eventUsersDatabaseRef.child(data.child("user_id").value.toString()).addListenerForSingleValueEvent(object: ValueEventListener{
-//                            override fun onCancelled(p0: DatabaseError) {
-//                            }
-//
-//                            override fun onDataChange(p0: DataSnapshot) {
-//                                Log.d("TAG", p0.child("display_name").value.toString())
-//                            }
-//
-//                        })
-//
-//                    }
-//                })
-//                startActivity(Intent(this, MenuActivity::class.java))
                 finish()
             }else{
                 Toast.makeText(this, "Nie udało się utworzyć wydarzenia", Toast.LENGTH_LONG).show()

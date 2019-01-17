@@ -66,18 +66,7 @@
                         android:textColor="#f0f7f4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <!--<EditText-->
-                <!--android:padding="10dp"-->
-                <!--android:id="@+id/eventPlaceEt"-->
-                <!--android:layout_marginTop="15dp"-->
-                <!--android:background="@drawable/selector_bg_edit_2"-->
-                <!--android:hint="Miejsce wydarzenia"-->
-                <!--android:textCursorDrawable="@drawable/bg_input_cursor_2"-->
-                <!--android:inputType="text"-->
-                <!--android:textColor="#f0f7f4"-->
-                <!--android:textSize="14sp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
+
                 <Spinner
                         android:id="@+id/eventPlaceSpinner"
                         android:layout_width="fill_parent"
@@ -87,20 +76,7 @@
                         android:padding="10dp">
 
                 </Spinner>
-                <!--<DatePicker-->
-                <!--android:id="@+id/createEventDatePicker"-->
-                <!--android:background="@color/colorCardView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"></DatePicker>-->
-                <!--<TimePicker-->
-                <!--android:id="@+id/createEventTimePicker"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:background="@color/colorCardView"-->
-                <!---->
-                <!--android:layout_height="match_parent">-->
 
-
-                <!--</TimePicker>-->
                 <EditText
                         android:padding="8dp"
                         android:id="@+id/eventDateStartEt"
@@ -130,7 +106,7 @@
                         android:textCursorDrawable="@drawable/bg_input_cursor_2"
                         android:background="@drawable/selector_bg_edit_2"
                         android:padding="5dp"
-                        android:id="@+id/tag1"
+                        android:id="@+id/tagsCreateEventEt"
                         android:textColor="#f0f7f4"
                         android:textSize="12sp"
                         android:hint="Tagi (Opcjonalnie, max 3)"

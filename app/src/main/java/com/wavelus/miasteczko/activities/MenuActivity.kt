@@ -40,6 +40,9 @@ class MenuActivity : AppCompatActivity() {
             eventListIntent.putExtra("townName", townName)
             startActivity(eventListIntent)
         }
+        searchEventsByTagBtn.setOnClickListener {
+            startActivity(Intent(this, SearchEventsActivity::class.java))
+        }
 
         addEventBtn.setOnClickListener {
             var createEventIntent = Intent(this, CreateEventActivity::class.java)
@@ -54,6 +57,7 @@ class MenuActivity : AppCompatActivity() {
         aboutAppBtn.setOnClickListener {
             startActivity(Intent(this, AboutAppActivity::class.java))
         }
+
 
         menuTownTV.setOnClickListener {
             var options = arrayOf("Miasteczko AGH", "Politechnika Czyżyny")

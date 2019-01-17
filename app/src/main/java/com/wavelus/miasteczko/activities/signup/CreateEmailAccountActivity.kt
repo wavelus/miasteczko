@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -25,7 +26,7 @@ class CreateEmailAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_email_account)
-
+        FirebaseApp.initializeApp(this)
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -43,6 +44,8 @@ class CreateEmailAccountActivity : AppCompatActivity() {
         }
 
     }
+
+
     /**Funkcja umożliwiająca utworzenie konta
      * @param email: Adres email podany przez użytkownika podczas rejestracji
      * @param password: Hasło podane przez użytkownika podczas rejestracji
