@@ -45,4 +45,7 @@
         <item>Neptune</item>
     </string-array>
 
+    <string name="facebook_app_id">370239113786580</string>
+    <string name="fb_login_protocol_scheme">fb370239113786580</string>
+
 </resources>
