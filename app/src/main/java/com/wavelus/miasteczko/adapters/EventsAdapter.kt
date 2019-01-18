@@ -41,6 +41,8 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
         getNumberElementsInCollection(eventAttendeesDatabaseReference, holder)
     }
 
+    /**
+     * Funkcja zwraca liczbę elementów w kolekcji wykorzystane do liczenia osób w wydarzeniu*/
     private fun getNumberElementsInCollection(databaseReference: DatabaseReference, holderInOuterFunctionGetData: EventsAdapter.ViewHolder){
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {

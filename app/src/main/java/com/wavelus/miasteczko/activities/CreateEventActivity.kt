@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.*
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.wavelus.miasteczko.EventStatus
@@ -36,6 +37,7 @@ class CreateEventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_event)
+        FirebaseApp.initializeApp(this);
 
         eventDateStartEt.setText(sdf.format(Date()))
         eventDateEndEt.setText(stf.format(Date()))
@@ -77,6 +79,8 @@ class CreateEventActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Funkcja zwraca trzy tagi ze Stringu podanego przez użytkownika*/
     private fun takeThreeTagsFromString(tagString: String): ArrayList<String>{
         var tagStringArray = tagString.trim().split(" ")
         var arrayLenght = tagStringArray.size

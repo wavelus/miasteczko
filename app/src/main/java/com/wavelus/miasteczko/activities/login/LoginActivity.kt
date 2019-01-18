@@ -65,12 +65,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Pass the activity result back to the Facebook SDK
         callbackManager!!.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
-//        Log.d(TAG, "handleFacebookAccessToken:$token")
 
         val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential)
@@ -87,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 // ...
             }
     }
+
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             var menuIntent = Intent(this, MenuActivity::class.java)
@@ -95,6 +94,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sprawdzenie czy użytkownik jest zalogowany*/
     public override fun onStart() {
         super.onStart()
         auth = FirebaseAuth.getInstance()

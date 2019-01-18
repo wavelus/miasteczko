@@ -20,7 +20,6 @@ import com.wavelus.miasteczko.models.MyEvent
 /**
  * Fragment wyświetlający wszystkie wydarzenia*/
 class AllEventsFragment : Fragment() {
-//    private lateinit var
 
     private lateinit var queryEventsFromFlanki: Query
     private lateinit var optionsOfFlanki: FirebaseRecyclerOptions<MyEvent>
