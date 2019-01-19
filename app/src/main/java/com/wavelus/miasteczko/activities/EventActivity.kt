@@ -33,6 +33,7 @@ class EventActivity : AppCompatActivity() {
     private var eventOwnerId: String?=null
     private var eventStatus: String?=null
     private var eventPlace: String?=null
+    private var eventPlaceId: String?=null
     private var eventDateStart: String?=null
     private var eventDateEnd: String?=null
     private var eventNumberOfAttendees: String?=null
@@ -48,6 +49,7 @@ class EventActivity : AppCompatActivity() {
         eventOwnerId = intent.extras.getString("event_owner_id")
         eventStatus = intent.extras.getString("event_status")
         eventPlace = intent.extras.getString("event_place_name")
+        eventPlaceId = intent.extras.getString("event_place_id")
         eventDateStart = intent.extras.getString("event_date_start")
         eventDateEnd = intent.extras.getString("event_date_end")
         eventNumberOfAttendees = intent.extras.getString("event_number_attendees")
@@ -56,16 +58,14 @@ class EventActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance()
         currentUserId = mAuth!!.currentUser!!.uid
         eventAttendeesDatabaseReference = mDatabase!!.reference.child("event_attendees").child(eventId.toString())
-        eventDatabaseReference = mDatabase!!.reference.child("location_events").child(eventPlace.toString())
-        eventTownDatabaseReference = mDatabase!!.reference.child("town_agh").child(eventPlace.toString())
-//        eventDatabaseReference = mDatabase!!.reference.child("politechnika").child(eventPlace.toString())
+        eventDatabaseReference = mDatabase!!.reference.child("location_events").child(eventPlaceId.toString())
+        eventTownDatabaseReference = mDatabase!!.reference.child(MyTable.getTownId(eventPlace.toString())).child(eventPlaceId.toString())
         attendee.put("user_id", currentUserId)
 
 
         eventNameTv.text = eventName
         eventOwnerTv.text = "Organizator: " + eventOwner
         eventStatusTv.text = "Wkrótce"
-//        eventStatusTv.text = eventStatus
         eventNumberOfAttendeesTv.text = "Liczba chętnych: " + eventNumberOfAttendees
         eventPlaceTv.text = eventPlace
         eventDateStartTv.text = "Kiedy? " + eventDateStart
@@ -88,7 +88,6 @@ class EventActivity : AppCompatActivity() {
                 }
 
                 override fun onDataChange(data: DataSnapshot) {
-                    Log.d("taggg", "${data.childrenCount} ${data.child("user_id").value.toString()} ${data.key}")
                     if (data.childrenCount.toInt() == 0){
                         disJoinToEvent.visibility = View.GONE
                         joinToEvent.visibility = View.VISIBLE
@@ -117,6 +116,7 @@ class EventActivity : AppCompatActivity() {
 
         removeEvent.setOnClickListener {
             removeEvent.visibility = View.GONE
+            removeEvent(eventId.toString(), eventDatabaseReference)
             removeEvent(eventId.toString(), eventTownDatabaseReference)
             finish()
         }

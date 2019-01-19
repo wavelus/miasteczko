@@ -105,8 +105,10 @@ class EventsAdapter(option: FirebaseRecyclerOptions<MyEvent>):
                 myEventIntent.putExtra("event_name", event.event_name)
                 myEventIntent.putExtra("event_status", event.event_status)
                 myEventIntent.putExtra("event_place_name", eventPlaceName)
+                myEventIntent.putExtra("event_place_id", event.event_place_id)
                 myEventIntent.putExtra("event_date_start", event.event_date_start)
                 myEventIntent.putExtra("event_date_end", event.event_date_end)
+                myEventIntent.putExtra("event_town_name", event.event_town_name)
                 itemView.context.startActivity(myEventIntent)
             }
         }

@@ -18,10 +18,12 @@ class MyEvent() {
     var event_date_end: String? = null
     /** Status wydarzenia*/
     var event_status: String? = null
+    /** Nazwa miejsca*/
+    var event_town_name: String ?= null
 
     /** Konstruktor obiektu*/
     constructor(event_id:String, event_name:String,event_owner_id: String,event_place_id: String,event_date_start: String,
-                event_date_end: String,event_status: String):this(){
+                event_date_end: String,event_status: String, event_town_name: String):this(){
         this.event_id = event_id
         this.event_name = event_name
         this.event_owner_id = event_owner_id
@@ -29,5 +31,6 @@ class MyEvent() {
         this.event_date_start = event_date_start
         this.event_date_end = event_date_end
         this.event_status = event_status
+        this.event_town_name = event_town_name
     }
 }
