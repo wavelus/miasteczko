@@ -6,8 +6,11 @@ import android.os.Bundle
 import com.wavelus.miasteczko.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
+/**
+ * Aktywność umożliwiająca wybór sposobu rejestracji*/
 class SignUpActivity : AppCompatActivity() {
-
+    /**
+     * Akcja podejmowana podczas tworzenia aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)

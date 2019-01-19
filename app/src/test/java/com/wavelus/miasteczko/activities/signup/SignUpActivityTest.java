@@ -1,4 +1,4 @@
-package com.wavelus.miasteczko.activities;
+package com.wavelus.miasteczko.activities.signup;
 
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -36,21 +36,22 @@ import static org.robolectric.shadows.ShadowInstrumentation.getInstrumentation;
 
 @RunWith(RobolectricTestRunner.class)
 //@Config(constants = BuildConfig.class, packageName = "org.khanacademy.android", sdk = 28)
-public class LoginActivityTest {
+
+public class SignUpActivityTest {
     private AppCompatActivity activity;
-//    private AppCompatActivity
+    //    private AppCompatActivity
     private Button button;
 
     @Before
     public void setUp(){
 
-        activity = Robolectric.setupActivity(LoginActivity.class);
-        button = activity.findViewById(R.id.loginEmailBtn);
+        activity = Robolectric.setupActivity(SignUpActivity.class);
+        button = activity.findViewById(R.id.signUpEmailBtn);
     }
 
     @Test
     public void buttonTest(){
-        Instrumentation.ActivityMonitor am = getInstrumentation().addMonitor(LoginEmailActivity.class.getName(), null, true);
+        Instrumentation.ActivityMonitor am = getInstrumentation().addMonitor(CreateEmailAccountActivity.class.getName(), null, true);
         button.performClick();
         am.waitForActivityWithTimeout(1);
         assertEquals(1, am.getHits());
@@ -59,17 +60,6 @@ public class LoginActivityTest {
     @Test
     public void onCreateTest(){
 //        assertEquals(R.layout.activity_login,);
-        assertEquals(R.id.activity_login_root, shadowOf(activity).getContentView().getId());
+        assertEquals(R.id.activity_sign_up_root, shadowOf(activity).getContentView().getId());
     }
-
-    @Test
-    public void clickingLogin_shouldStartLoginActivity() {
-        LoginActivity activity = Robolectric.setupActivity(LoginActivity.class);
-        activity.findViewById(R.id.loginEmailBtn).performClick();
-
-        Intent expectedIntent = new Intent(activity, LoginEmailActivity.class);
-        Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
-        assertEquals(expectedIntent.getComponent(), actual.getComponent());
-    }
-
 }

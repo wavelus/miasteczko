@@ -49,14 +49,14 @@ public class LoginEmailActivityTest {
     }
 
 
-    @Test
-    public void callMethodLoginUser() {
-        String emailText = "name@o8.pl";
-        String passwordText = "advancedPassword";
-
-        loginButton.performClick();
-//        verify(mockLoginEmailActivity, times(1)).loginUser(emailText,passwordText);
-    }
+//    @Test
+//    public void callMethodLoginUser() {
+//        String emailText = "name@o8.pl";
+//        String passwordText = "advancedPassword";
+//
+//        loginButton.performClick();
+////        verify(mockLoginEmailActivity, times(1)).loginUser(emailText,passwordText);
+//    }
 
     @Test
     public void emailValidator_CorrectEmailSimple_ReturnsTrue() {

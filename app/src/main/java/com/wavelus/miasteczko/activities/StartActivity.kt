@@ -4,6 +4,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.wavelus.miasteczko.R
@@ -11,7 +13,8 @@ import com.wavelus.miasteczko.activities.login.LoginActivity
 import com.wavelus.miasteczko.activities.signup.SignUpActivity
 import kotlinx.android.synthetic.main.activity_start.*
 
-/** Pierwszy ekran. Możliwe przejście do ekranu logowania bądź zakładania konta*/
+/** Pierwszy ekran. Możliwe przejście do ekranu logowania bądź zakładania konta
+ * @see AppCompatActivity*/
 class StartActivity : AppCompatActivity() {
     /** Punkt wejścia pakietu SDK Firebase Authenticaion*/
     var mAuth: FirebaseAuth? = null
@@ -20,9 +23,11 @@ class StartActivity : AppCompatActivity() {
     /** Pozwala sprawdzić aktualny stan użytkownika - zalogowany/niezalogowany*/
     var mAuthListener: FirebaseAuth.AuthStateListener? = null
 
+    /** Akcja podejmowana pod utworzeniu aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+
 
         mAuth = FirebaseAuth.getInstance()
         mAuthListener = FirebaseAuth.AuthStateListener {
@@ -53,7 +58,8 @@ class StartActivity : AppCompatActivity() {
         mAuth!!.addAuthStateListener(mAuthListener!!)
     }
 
-    /** Usunięcie listenera*/
+    /** Usunięcie listenera
+     * @see AppCompatActivity*/
     override fun onStop() {
         super.onStop()
         if(mAuthListener!=null){

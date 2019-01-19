@@ -1,28 +1,22 @@
 package com.wavelus.miasteczko.activities
 
-import android.app.Activity
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.wavelus.miasteczko.EventStatus
 import com.wavelus.miasteczko.R
-import com.wavelus.miasteczko.R.id.snap
 import kotlinx.android.synthetic.main.activity_create_event.*
-import android.widget.Spinner
 import com.wavelus.miasteczko.models.MyTable
-import kotlinx.android.synthetic.main.fragment_all_events.*
+import java.lang.Exception
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -35,15 +29,20 @@ class CreateEventActivity : AppCompatActivity() {
     /** Referencja do bazy danych*/
     var mDatabase: FirebaseDatabase? = null
 
-    var eventPlaces = arrayOf("Flankowy Zaułek","Piwna Siedziba")
-
+    private var eventPlaces = arrayOf("Flankowy Zaułek","Sportowe Kosz'ary","Piwna Siedziba","Śpiewające Gitary")
+    /** Miejsce wydarzenia wybrane przez użytkownika*/
     var eventPlace = "Place"
-    lateinit var spinner: Spinner
-
+    private lateinit var spinner: Spinner
+    private  var sdf = SimpleDateFormat("yyyy/MM/dd")
+    private  var stf = SimpleDateFormat("HH:mm")
+    /** Akcja podejmowana pod utworzeniu aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_event)
+        FirebaseApp.initializeApp(this);
 
+        eventDateStartEt.setText(sdf.format(Date()))
+        eventDateEndEt.setText(stf.format(Date()))
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
 
@@ -57,7 +56,6 @@ class CreateEventActivity : AppCompatActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 eventPlace = MyTable.getTableId(position)
-//                eventPlace = getTableId(position)
             }
 
         }
@@ -66,38 +64,64 @@ class CreateEventActivity : AppCompatActivity() {
             /** ProgressBar w celu uniknięcie utworzenia dwóch takich samych wydarzeń w tym samym czasie*/
             createEventProgressBarId.visibility= View.VISIBLE
 
+            var eventTownName = intent.extras.getString("townName").toString()
 
             var eventName = eventNameEt.text.toString().trim()
-//            var eventPlace = eventPlaceEt.text.toString().trim()
             var eventDateStart = eventDateStartEt.text.toString().trim()
             var eventDateEnd = eventDateEndEt.text.toString().trim()
+            var threeTags: ArrayList<String> = takeThreeTagsFromString(tagsCreateEventEt.text.toString().trim())
+            /**Sprawdzenie poprawności danych*/
+            sdf.setLenient(false)
+            stf.setLenient(false)
+            try {
+                sdf.parse(eventDateStart)
+                stf.parse(eventDateEnd)
+                if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
+                    createEvent(eventName,eventPlace,eventTownName,eventDateStart,eventDateEnd, threeTags)
+                }else{
+                    Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
+                }
+            }catch (e: ParseException){
+                Toast.makeText(this,"Zły format daty lub godziny", Toast.LENGTH_LONG).show()
 
-            if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
-                createEvent(eventName,eventPlace,eventDateStart,eventDateEnd)
-            }else{
-                Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
             }
-
             createEventProgressBarId.visibility= View.INVISIBLE
         }
 
     }
 
     /**
-     * @param eventName:
-     * @param eventPlace:
-     * @param eventDateStart:
-     * @param eventDateEnd:
+     * Funkcja zwraca trzy tagi ze Stringu podanego przez użytkownika*/
+    private fun takeThreeTagsFromString(tagString: String): ArrayList<String>{
+        var tagStringArray = tagString.trim().split(" ")
+        var arrayLenght = tagStringArray.size
+        var threeTags: ArrayList<String> = ArrayList()
+        for(i in 0..2){
+            if(i<arrayLenght){
+                threeTags.add(tagStringArray[i])
+            }else{
+                threeTags.add("")
+            }
+        }
+        return threeTags
+    }
+
+    /**
+     * @param eventName: Nazwa wydarzenia
+     * @param eventPlace: Miejsce wydarzenia
+     * @param eventDateStart: Data rozpoczęcia
+     * @param eventDateEnd: Data zakończenia
      *
+     * Funkcja tworzy obiekt wydarzenie i umieszcza je w bazie danych
      */
-    private fun createEvent(eventName: String, eventPlace: String, eventDateStart:String, eventDateEnd:String){
+    fun createEvent(eventName: String, eventPlace: String, eventTownName: String, eventDateStart:String, eventDateEnd:String, tags:ArrayList<String>){
         var currentUserId = mAuth!!.currentUser!!.uid
-        var eventUsersDatabaseRef = mDatabase!!.reference.child("users")
         var eventsDatabaseRef = mDatabase!!.reference.child("events")
         var pushedEventsDatabaseRef = mDatabase!!.reference.child("location_events").child(eventPlace).push()
         var eventAttendeesDatabaseRef = mDatabase!!.reference.child("event_attendees")
+        var pushedeventsInTownDatabaseRef = mDatabase!!.reference.child(MyTable.getTownId(eventTownName)).child(eventPlace)
         var event_key: String = pushedEventsDatabaseRef.key.toString()
-        val attendant = HashMap<String,String>()
+        val attendee = HashMap<String,String>()
 
         var eventObject = HashMap<String,Any>()
         eventObject.put("event_id", event_key)
@@ -107,34 +131,18 @@ class CreateEventActivity : AppCompatActivity() {
         eventObject.put("event_date_start", eventDateStart)
         eventObject.put("event_date_end", eventDateEnd)
         eventObject.put("event_status", EventStatus.SOON)
+        eventObject.put("event_town_name", eventTownName)
+        eventObject.put("first_tag", tags[0])
+        eventObject.put("second_tag", tags[1])
+        eventObject.put("third_tag", tags[2])
 
-        attendant[currentUserId] = currentUserId
-//        attendant[currentUserId] = eventUsersDatabaseRef.child("user_id")
+        attendee.put("user_id", currentUserId)
         pushedEventsDatabaseRef.setValue(eventObject).addOnCompleteListener {
             task: Task<Void> ->
             if (task.isSuccessful){
+                pushedeventsInTownDatabaseRef.child(event_key).setValue(eventObject)
                 eventsDatabaseRef.child(event_key).setValue(eventObject)
-                eventAttendeesDatabaseRef.child(event_key).setValue(attendant)
-                eventAttendeesDatabaseRef.child(event_key).addListenerForSingleValueEvent(object: ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                    }
-
-                    override fun onDataChange(data: DataSnapshot) {
-                        Log.d("TAG", data.child("user_id").value.toString())
-//                        Log.d("TAG", data.childrenCount.toString())
-                        eventUsersDatabaseRef.child(data.child("user_id").value.toString()).addListenerForSingleValueEvent(object: ValueEventListener{
-                            override fun onCancelled(p0: DatabaseError) {
-                            }
-
-                            override fun onDataChange(p0: DataSnapshot) {
-                                Log.d("TAG", p0.child("display_name").value.toString())
-                            }
-
-                        })
-
-                    }
-                })
-                startActivity(Intent(this, MenuActivity::class.java))
+                eventAttendeesDatabaseRef.child(event_key).push().setValue(attendee)
                 finish()
             }else{
                 Toast.makeText(this, "Nie udało się utworzyć wydarzenia", Toast.LENGTH_LONG).show()

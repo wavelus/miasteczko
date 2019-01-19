@@ -8,9 +8,11 @@ import com.wavelus.miasteczko.R
 import com.wavelus.miasteczko.adapters.SectionPagerAdapter
 import kotlinx.android.synthetic.main.activity_event_list.*
 
-
+/** Klasa zawierająca trzy fragmenty w których wyświetlane są wydarzenia
+ * @see SectionPagerAdapter*/
 class EventListActivity : AppCompatActivity() {
 
+    /** Akcja podejmowana pod utworzeniu aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         var sectionAdapter: SectionPagerAdapter? = null
         super.onCreate(savedInstanceState)
