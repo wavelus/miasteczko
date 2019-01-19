@@ -21,6 +21,8 @@ class EventActivity : AppCompatActivity() {
     var mDatabase: FirebaseDatabase? = null
 
     private lateinit var eventAttendeesDatabaseReference: DatabaseReference
+    private lateinit var eventDatabaseReference: DatabaseReference
+    private lateinit var eventTownDatabaseReference: DatabaseReference
 
     private lateinit var currentUserId: String
     private val attendee = HashMap<String,String>()
@@ -54,7 +56,9 @@ class EventActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance()
         currentUserId = mAuth!!.currentUser!!.uid
         eventAttendeesDatabaseReference = mDatabase!!.reference.child("event_attendees").child(eventId.toString())
-//        attendee[currentUserId] = currentUserId
+        eventDatabaseReference = mDatabase!!.reference.child("location_events").child(eventPlace.toString())
+        eventTownDatabaseReference = mDatabase!!.reference.child("town_agh").child(eventPlace.toString())
+//        eventDatabaseReference = mDatabase!!.reference.child("politechnika").child(eventPlace.toString())
         attendee.put("user_id", currentUserId)
 
 
@@ -113,6 +117,7 @@ class EventActivity : AppCompatActivity() {
 
         removeEvent.setOnClickListener {
             removeEvent.visibility = View.GONE
+            removeEvent(eventId.toString(), eventTownDatabaseReference)
             finish()
         }
 
@@ -133,6 +138,9 @@ class EventActivity : AppCompatActivity() {
                 disJoinToEvent.visibility = View.VISIBLE
             }
         }
+    }
+    fun removeEvent(eventId:String, eventDatabaseReference: DatabaseReference){
+        eventDatabaseReference.child(eventId).removeValue()
     }
 
     /** Funkcja umożliwiająca upuszczenie wydarzenia

@@ -49,21 +49,10 @@
             android:text="Wszystkie wydarzenia"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menuCV"
-            android:id="@+id/allEventsBtn" tools:layout_editor_absoluteY="16dp"/>
-    <Button
-            android:stateListAnimator="@drawable/state_list_animator_z"
-            android:background="@color/colorAccent"
-            android:textColor="@color/grey_100"
-            android:text="Miasteczkowe wydarzenia"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/userEventsBtn" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/addEventBtn"/>
+            android:id="@+id/allEventsBtn"/>
     <Button
             android:stateListAnimator="@drawable/state_list_animator_z"
             android:background="@color/colorAccent"
@@ -74,19 +63,8 @@
             android:id="@+id/addEventBtn"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp" android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/allEventsBtn"/>
-    <Button
-            android:stateListAnimator="@drawable/state_list_animator_z"
-            android:background="@color/colorAccent"
-            android:textColor="@color/grey_100"
-            android:text="Czyżyńskie wydarzenia"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/userCreatedEventsBtnw"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/userEventsBtn"/>
     <Button
             android:stateListAnimator="@drawable/state_list_animator_z"
             android:background="@color/colorAccent"
@@ -94,7 +72,7 @@
             android:text="Wyświetl mapę"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/mapBtn" android:layout_marginTop="8dp"
+            android:id="@+id/mapBtn" android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/searchEventsByTagBtn" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
@@ -105,7 +83,7 @@
             android:text="O aplikacji"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/aboutAppBtn" android:layout_marginTop="8dp"
+            android:id="@+id/aboutAppBtn" android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/mapBtn" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>
@@ -116,10 +94,11 @@
             android:text="Wyszukaj wydarzenie za pomocą tagu"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/searchEventsByTagBtn" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/userCreatedEventsBtnw" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/searchEventsByTagBtn"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp" android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/addEventBtn"/>
 
 
 </android.support.constraint.ConstraintLayout>

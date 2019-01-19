@@ -30,16 +30,6 @@ class MenuActivity : AppCompatActivity() {
             eventListIntent.putExtra("townName", townName)
             startActivity(eventListIntent)
         }
-        userEventsBtn.setOnClickListener {
-            var eventListIntent = Intent(this, EventListActivity::class.java)
-            eventListIntent.putExtra("townName", townName)
-            startActivity(eventListIntent)
-        }
-        userCreatedEventsBtnw.setOnClickListener {
-            var eventListIntent = Intent(this, EventListActivity::class.java)
-            eventListIntent.putExtra("townName", townName)
-            startActivity(eventListIntent)
-        }
         searchEventsByTagBtn.setOnClickListener {
             startActivity(Intent(this, SearchEventsActivity::class.java))
         }

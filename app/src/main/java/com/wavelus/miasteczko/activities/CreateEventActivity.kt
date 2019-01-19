@@ -13,6 +13,8 @@ import com.wavelus.miasteczko.EventStatus
 import com.wavelus.miasteczko.R
 import kotlinx.android.synthetic.main.activity_create_event.*
 import com.wavelus.miasteczko.models.MyTable
+import java.lang.Exception
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,9 +33,9 @@ class CreateEventActivity : AppCompatActivity() {
     /** Miejsce wydarzenia wybrane przez użytkownika*/
     var eventPlace = "Place"
     private lateinit var spinner: Spinner
-    /** Akcja podejmowana pod utworzeniu aktywności*/
-    private  var sdf = SimpleDateFormat("yyy/MM/dd")
+    private  var sdf = SimpleDateFormat("yyyy/MM/dd")
     private  var stf = SimpleDateFormat("HH:mm")
+    /** Akcja podejmowana pod utworzeniu aktywności*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_event)
@@ -68,12 +70,21 @@ class CreateEventActivity : AppCompatActivity() {
             var eventDateStart = eventDateStartEt.text.toString().trim()
             var eventDateEnd = eventDateEndEt.text.toString().trim()
             var threeTags: ArrayList<String> = takeThreeTagsFromString(tagsCreateEventEt.text.toString().trim())
-            if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
-                createEvent(eventName,eventPlace,eventTownName,eventDateStart,eventDateEnd, threeTags)
-            }else{
-                Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
-            }
+            /**Sprawdzenie poprawności danych*/
+            sdf.setLenient(false)
+            stf.setLenient(false)
+            try {
+                sdf.parse(eventDateStart)
+                stf.parse(eventDateEnd)
+                if (!TextUtils.isEmpty(eventName)&&!TextUtils.isEmpty(eventPlace)&&!TextUtils.isEmpty(eventDateStart)&&!TextUtils.isEmpty(eventDateEnd)){
+                    createEvent(eventName,eventPlace,eventTownName,eventDateStart,eventDateEnd, threeTags)
+                }else{
+                    Toast.makeText(this,"Tworzenie wydarzenia nie powiodło się", Toast.LENGTH_LONG).show()
+                }
+            }catch (e: ParseException){
+                Toast.makeText(this,"Zły format daty lub godziny", Toast.LENGTH_LONG).show()
 
+            }
             createEventProgressBarId.visibility= View.INVISIBLE
         }
 
